@@ -1,3 +1,4 @@
+#!/usr/bin/env cbmbasic
 100 F=3:B=5
 110 FOR I=1 TO 100
 120 IF I<>F OR I<>B THEN GOTO 160
