@@ -2,47 +2,46 @@
 	extern	printf
 
 	section	.text
-main:	xor	ebx, ebx
-.loop: 	inc	ebx
-	cmp	ebx, 100
+main:	enter	0, 0
+	push	rbx
+	xor	ebx, ebx
+.loop:	inc	ebx
+	cmp	ebx, 101
 	je	.done
-	mov	eax, ebx	; fizz?
-	mov	ecx, 3
-	cdq
-	div	ecx
-	cmp	edx, 0
+	cmp	ebx, [i_nf]
 	je	.fizz
-	mov	eax, ebx	; buzz?
-	mov	ecx, 5
-	cdq
-	div	ecx
-	cmp	edx, 0
+	cmp	ebx, [i_nb]
 	je	.buzz
-	mov	edi, s_num	; num
+	mov	edi, s_num
 	mov	esi, ebx
 	xor	eax, eax
 	call	printf
 	jmp	.loop
-.fizz:	mov	eax, ebx	; fizzbuzz?
-	mov	ecx, 5
-	cdq
-	div	ecx
-	cmp	edx, 0
+.buzz:	add	dword [i_nb], 5
+	mov	edi, s_buzz
+	xor	eax, eax
+	call	printf
+	jmp	.loop
+.fizz:	add	dword [i_nf], 3
+	cmp	ebx, [i_nb]
 	je	.fibu
-	mov	edi, s_fizz	; fizz
+	mov	edi, s_fizz
 	xor	eax, eax
 	call	printf
 	jmp	.loop
-.fibu:	mov	edi, s_fibu	; fizzbuzz
+.fibu:	add	dword [i_nb], 5
+	mov	edi, s_fibu
 	xor	eax, eax
 	call	printf
 	jmp	.loop
-.buzz:	mov	edi, s_buzz	; buzz
-	xor	eax, eax
-	call	printf
-	jmp	.loop
-.done:	mov	eax, 0
+.done:	xor	eax, eax
+	pop	rbx
+	leave
 	ret
+
+	section .data
+i_nf:	dd	3		; next fizz
+i_nb:	dd	5		; next buzz
 
 	section .rodata
 s_fizz:	db	"Fizz", 10, 0
