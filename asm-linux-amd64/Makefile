@@ -1,6 +1,6 @@
 all: fizzbuzz
 
-fizzbuzz:
+fizzbuzz: fizzbuzz.s
 	nasm -felf64 -o fizzbuzz.o fizzbuzz.s	
 	cc -no-pie -o fizzbuzz fizzbuzz.o -lc
 
