@@ -13,6 +13,9 @@ main:	enter	10, 0
 .loop:	inc	ebx
 	cmp	ebx, 101
 	je	.done
+	mov	eax, WRITE		; common syscall args
+	mov	edi, STDOUT		;
+	mov	edx, 5			;
 	cmp	bl, [rbp-9]
 	je	.fizz
 	cmp	bl, [rbp-10]
@@ -23,24 +26,16 @@ main:	enter	10, 0
 	call	printf
 	jmp	.loop
 .buzz:	add	byte [rbp-10], 5
-	mov	eax, WRITE
-	mov	edi, STDOUT
 	mov	esi, s_buzz
-	mov	edx, 5
 	syscall
 	jmp	.loop
 .fizz:	add	byte [rbp-9], 3
 	cmp	bl, [rbp-10]
 	je	.fibu
-	mov	eax, WRITE
-	mov	edi, STDOUT
 	mov	esi, s_fizz
-	mov	edx, 5
 	syscall
 	jmp	.loop
 .fibu:	add	byte [rbp-10], 5
-	mov	eax, WRITE
-	mov	edi, STDOUT
 	mov	esi, s_fibu
 	mov	edx, 9
 	syscall
