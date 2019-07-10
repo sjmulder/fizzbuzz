@@ -4,6 +4,7 @@ int
 main()
 {
 	char str[4] = "  0\n";
+	int next_f = 3, next_b = 5;
 	int i, j;
 
 	for (i = 1; i <= 100; i++) {
@@ -14,13 +15,17 @@ main()
 		else
 			str[j]++;
 
-		if (i % 3 == 0 && i % 5 == 0)
-			write(1, "FizzBuzz\n", 9);
-		else if (i % 3 == 0)
-			write(1, "Fizz\n", 5);
-		else if (i % 5 == 0)
+		if (i == next_f) {
+			next_f += 3;
+			if (i == next_b) {
+				next_b += 5;
+				write(1, "FizzBuzz\n", 9);
+			} else
+				write(1, "Fizz\n", 5);
+		} else if (i == next_b) {
+			next_b += 5;
 			write(1, "Buzz\n", 5);
-		else
+		} else
 			write(1, str, 4);
 	}
 
